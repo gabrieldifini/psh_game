@@ -28,5 +28,7 @@ const getStats = () => {
 };
 
 const cron = new CronJob("*/5 * * * *", getStats, null, true);
+getStats();
+cron.start();
 
 module.exports = { cron };
