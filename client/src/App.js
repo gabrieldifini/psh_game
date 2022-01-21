@@ -1,12 +1,11 @@
 import React from "react";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Grid from "@mui/material/Grid";
 import { makeStyles } from "@mui/styles";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+import DownloadButton from "./components/DownloadButton";
 import Header from "./components/Header";
 import StatsTable from "./components/StatsTable";
 
@@ -35,16 +34,7 @@ export default function App() {
         <Grid item xs={12} md={10} lg={6} xl={4}>
           <StatsTable />
           <Box className={classes.buttonContainer}>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => {
-                console.log("Download button clicked.");
-              }}
-              style={{ fontFamily: "Montserrat", backgroundColor: 'red', fontWeight: 'bold' }}
-            >
-              <FileDownloadIcon /> Download CSV
-            </Button>
+            <DownloadButton />
           </Box>
         </Grid>
       </Grid>
