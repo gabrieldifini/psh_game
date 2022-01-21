@@ -1,6 +1,5 @@
 const CronJob = require("cron").CronJob;
-const Player = require("../models/player")
-const Stat = require("../models/stat")
+const statController = require("../controllers/stat.js");
 
 const { NODE_ENV_USERS_URL } = require("dotenv").config().parsed;
 const axios = require("axios");
@@ -22,12 +21,12 @@ const getStats = () => {
           profile_image: player.picture.large,
           score: randomNumberBetween(1, 100)
         }))
-        console.log(playersStats)
+        playersStats.forEach(stat => { statController.create(stat) })
       })
       .catch((err) => console.error(err));
   }
 };
 
-const cron = new CronJob("*/5 * * * * *", getStats, null, true);
+const cron = new CronJob("*/5 * * * *", getStats, null, true);
 
 module.exports = { cron };
