@@ -5,7 +5,8 @@
     "database": "psh_game_db",
     "host": "localhost",
     "port": 8889,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   },
   "test": {
     "username": "root",
@@ -13,7 +14,8 @@
     "database": "psh_game_db",
     "host": "localhost",
     "port": 8889,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   },
   "production": {
     "username": "root",
@@ -21,6 +23,7 @@
     "database": "psh_game_db",
     "host": "localhost",
     "port": 8889,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false
   }
 }
