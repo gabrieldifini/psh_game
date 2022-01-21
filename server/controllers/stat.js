@@ -4,16 +4,31 @@ const { Stat, Player } = db;
 exports.findTop10 = (req, res) => {
   Stat.findAll({ order: [["score", "DESC"]], limit: 10, include: Player, raw: true, nest: true })
     .then((data) => {
-      const result = data.map(stat => ({
-        nickname: stat.Player.nickname,
-        profile_image: stat.Player.profile_image,
-        score: stat.score,
-      }));
-      const response = {
-        success: true,
-        result,
-      };
-      res.send(response);
+      if(data.length) {
+        const result = data.map(stat => ({
+          nickname: stat.Player.nickname,
+          profile_image: stat.Player.profile_image,
+          score: stat.score,
+        }));
+        let latestTimestamp;
+        Stat.findAll({ order: [["createdAt", "DESC"]], limit: 1})
+          .then((data) => {
+            latestTimestamp = data[0].createdAt;
+            const response = {
+              success: true,
+              result,
+              latestTimestamp,
+            };
+            res.send(response);
+          })
+      } else {
+        const response = {
+          success: true,
+          result: [],
+          latestTimestamp: null,
+        };
+        res.send(response);
+      }
     })
     .catch((err) => {
       res.status(500).send({
