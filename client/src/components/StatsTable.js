@@ -1,5 +1,8 @@
-import * as React from "react";
+import React from "react";
+
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import { makeStyles } from "@mui/styles";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,41 +22,40 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
     fontFamily: 'Montserrat',
+    maxHeight: '3rem',
   },
 }));
+
+const useStyles = makeStyles({
+  avatar: {
+    verticalAlign: 'middle',
+  },
+  nickname: { 
+    height: '100%', 
+    margin: 'auto 10px', 
+    fontWeight: 500 
+  },
+});
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 const columns = [
-  { field: "player", headerName: "Player", width: 400 },
-  { field: "score", headerName: "Score", type: "number", width: 230 },
+  { field: "position", headerName: "Position", width: 50 },
+  { field: "player", headerName: "Player", width: 380 },
+  { field: "score", headerName: "Score", width: 200 },
 ];
 
-const rows = [
-  { player: "Jon_Snow", score: 35 },
-  { player: "Cersei_Lannister", score: 42 },
-  { player: "Jaime_Lannister", score: 45 },
-  { player: "Arya_Stark", score: 16 },
-  { player: "Daenerys_Targaryen", score: 0 },
-  { player: "Melisandre", score: 150 },
-  { player: "Clifford_Ferrara", score: 44 },
-  { player: "Frances_Rossini", score: 36 },
-  { player: "Harvey_Roxie", score: 65 },
-];
+export default function StatsTable({ stats }) {
 
-export default function StatsTable() {
+  const classes = useStyles();
+
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -61,17 +63,21 @@ export default function StatsTable() {
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <StyledTableCell align="center">
+                <StyledTableCell key={column.field} align="center">
                   {column.headerName}
                 </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell align="center">{row.player}</StyledTableCell>
-                <StyledTableCell align="center">{row.score}</StyledTableCell>
+            {stats.map((stat, i) => (
+              <StyledTableRow key={stat.nickname}>
+                <StyledTableCell align="center">{i+1}</StyledTableCell>
+                <StyledTableCell align="center" style={{ display: 'flex', justifyContent: 'center', verticalAlign: 'middle' }}>
+                  <Avatar alt={`${stat.profile_image}_pic`} src={stat.profile_image} /> 
+                  <span className={classes.nickname}>{stat.nickname}</span>
+                </StyledTableCell>
+                <StyledTableCell align="center">{stat.score}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
