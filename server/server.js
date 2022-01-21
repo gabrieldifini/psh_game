@@ -1,6 +1,8 @@
 const express = require('express')
 const mysql = require('mysql')
 const myconn = require('express-myconnection')
+const cors = require('cors')
+
 const env = require('dotenv').config().parsed
 const routes = require(env.NODE_ENV_ROUTES_PATH)
 
@@ -16,6 +18,7 @@ app.use(myconn(mysql, {
     database: env.MYSQL_DB_NAME,
 }))
 
+app.use(cors())
 app.use(routes)
 
 app.listen(env.NODE_ENV_PORT, () => {
